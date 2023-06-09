@@ -23,7 +23,24 @@ def search():
         return _main.route(keyword)
     else:
         if kategori:
-            return _main.route(kategori)
+            if kategori == "populer" or kategori == "proyek" or kategori == "terbaru":
+                return _main.route(kategori)
+            else:
+                return (
+                    jsonify(
+                        {
+                            "results": [
+                                {
+                                    "data": None,
+                                    "msg": "category is not found!",
+                                    "status_code": 400,
+                                }
+                            ],
+                            "author": "Latip176",
+                        },
+                    ),
+                    400,
+                )
     return (
         jsonify(
             {

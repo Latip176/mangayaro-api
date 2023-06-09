@@ -11,11 +11,17 @@ class Response(object):
     def __response(self, query=None) -> str:
         if query == None:
             return self._Response__session.get(
-                "https://www.mangayaro.net/", headers={"UserAgent": "Chrome"}
+                "https://www.mangayaro.net/",
+                headers={
+                    "UserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                },
             )
         else:
             return self._Response__session.get(
-                f"https://www.mangayaro.net/?s={query}", headers={"UserAgent": "Chrome"}
+                f"https://www.mangayaro.net/?s={query}",
+                headers={
+                    "UserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                },
             )
 
     # --> Final Output
@@ -23,9 +29,15 @@ class Response(object):
         priv_list = []
         if query == "populer":
             for data in data_list:
-                url, title, chapter, rating = data
+                url, bg_url, title, chapter, rating = data
                 priv_list.append(
-                    {"url": url, "title": title, "chapter": chapter, "rating": rating}
+                    {
+                        "url": url,
+                        "bg_url": bg_url,
+                        "title": title,
+                        "chapter": chapter,
+                        "rating": rating,
+                    }
                 )
         elif query == "terbaru" or query == "proyek":
             for data in data_list:
@@ -69,7 +81,9 @@ class WebScrapper(Response):
         self.__data_list = list  # --> self data list: untuk menampung data list
 
     def route(self, query: str = None) -> dict:
-        if query:
+        self._Response__data_dict.clear()
+        self._WebScrapper__data_list.clear()
+        if query != None:
             if query == "populer" or query == "terbaru" or query == "proyek":
                 soup = BeautifulSoup(
                     self._Response__response().text, "html.parser"
@@ -113,9 +127,12 @@ class WebScrapper(Response):
         )  # --> Find div yang berisikan data populer sesuai yang ada di websitenya
         for i in content:
             link = i.find("a", href=True)
-            bigor = link.find("div", attrs={"class": "bigor"})
-            data_list = (url, title, chapter, rating) = [
+            bigor, limit = link.find("div", attrs={"class": "bigor"}), link.find(
+                "div", attrs={"class": "limit"}
+            )
+            data_list = (url, bg_url, title, chapter, rating) = [
                 link.get("href"),
+                limit.find("img").get("src"),
                 " ".join(
                     re.findall(
                         "([a-zA-Z0-9]+)",
