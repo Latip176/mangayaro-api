@@ -14,7 +14,7 @@ This project is Web Scraping to mangayaro.net with Python and Made for Rest Api
 ```
 (method get only)
 category:
-    populer, proyek, projek
+    populer, proyek, terbaru
     example:
         category=populer
 
