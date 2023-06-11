@@ -6,7 +6,7 @@ This project is Web Scraping to mangayaro.net with Python and Made for Rest Api
 
 - 07 June 2023: readme.md
 - 09 June 2023: fix bug, error, readme.md
-- 11 June 2023: add fitur reads for get information of comic and image on chapter
+- 11 June 2023: add fitur reads for get information of comic and get image on chapter
 # use
 
 ## route
@@ -24,7 +24,7 @@ category:
     ?category=populer
 ```
 ### reads
-```in reads you can read a infromation that comic or chapter image```
+```in reads you can read a infromation that comic or get image on chapter```
 ```
 url:
     paste the url of comic mangayaro (required)
@@ -35,12 +35,26 @@ url:
         &limit=10
         
     only_chapter:
-        get image on chapter with only chaptrr
+        get image on chapter with only chapter
         &only_chaptrer=10
     
     limit & only_chapter can't collab!
 ```
 
-## testing
-
-<a href="https://mangayaro-api-production.up.railway.app/api/search/?category=populer">https://mangayaro-api-production.up.railway.app/api/search/?category=populer</a>
+## testing example
+### search category
+```
+https://mangayaro-api-production.up.railway.app/api/search/?category=populer
+```
+### reads information comic
+```
+https://mangayaro-api-production.up.railway.app/api/reads/?url=https://www.mangayaro.net/manga/beyond-myriad-peoples/
+```
+### reads image on chapter with limit
+```
+https://mangayaro-api-production.up.railway.app/api/reads/?url=https://www.mangayaro.net/manga/beyond-myriad-peoples&limit=5
+```
+### reads image on chapter with only_chapter
+```
+https://mangayaro-api-production.up.railway.app/api/reads/?url=https://www.mangayaro.net/manga/beyond-myriad-peoples&only_chapter=3
+```
