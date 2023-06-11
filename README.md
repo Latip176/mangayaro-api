@@ -12,7 +12,8 @@ This project is Web Scraping to mangayaro.net with Python and Made for Rest Api
 ## route
 ### search
 ```in search you can search comic with params:```
-#### search
+#### keyword
+```keyword: title of comic u can find```
 ```
 search:
     ?keyword=one piece
