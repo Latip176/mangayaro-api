@@ -12,6 +12,9 @@ This project is Web Scraping to mangayaro.net with Python and Made for Rest Api
 ## route
 ### search
 ```in search you can search comic with params:```
+```
+/search/
+```
 #### keyword
 ```keyword: title of comic u can find```
 ```
@@ -27,6 +30,7 @@ category:
 ### reads
 ```in reads you can read a infromation that comic or get image on chapter```
 ```
+/reads/
 url:
     paste the url of comic mangayaro (required). example:
     ?url=https://www.mangayaro.net/manga/beyond-myriad-peoples/
