@@ -9,19 +9,33 @@ This project is Web Scraping to mangayaro.net with Python and Made for Rest Api
 
 # use
 
-## params
-
+## route
+### search
+```in search you can search comic with params:```
+#### search
+```JSON
+search:
+    ?keyword=one piece
 ```
-(method get only)
+#### category
+```category: populer, proyek, terbaru```
+```
 category:
-    populer, proyek, terbaru
-    example:
-        category=populer
-
-keyword:
-    title of comic
-    example:
-        keyword=one piece
+    ?category=populer
+```
+#### reads
+```
+url:
+    paste the url of comic mangayaro (required)
+    ?url=https://www.mangayaro.net/manga/beyond-myriad-peoples/
+    
+    limit:
+        count limit for get image in chapter
+        &limit=10
+        
+    only_chapter:
+        only_chapter is for get image in only chapter
+        &only_chaptrer=10
 ```
 
 ## testing
