@@ -1,4 +1,6 @@
 from src.Latip176.data import WebScrapper
+from src.Latip176.reads import ReadComic
+from src.Latip176.output import FinalOutput
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
@@ -14,6 +16,7 @@ def add_header(response):
     return response
 
 
+# --> Route for Search
 @app.route("/api/search/")
 def search():
     keyword = request.args.get("keyword")
@@ -27,31 +30,38 @@ def search():
                 return _main.route(kategori)
             else:
                 return (
-                    jsonify(
-                        {
-                            "results": [
-                                {
-                                    "data": None,
-                                    "msg": "category is not found!",
-                                    "status_code": 400,
-                                }
-                            ],
-                            "author": "Latip176",
-                        },
-                    ),
+                    jsonify(FinalOutput().results(None, "category is not found!", 400)),
                     400,
                 )
-    return (
-        jsonify(
-            {
-                "results": [
-                    {"data": None, "msg": "query is required!", "status_code": 400}
-                ],
-                "author": "Latip176",
-            },
-        ),
-        400,
-    )
+    return jsonify(FinalOutput()).results(None, "query is required!", 400), 400
+
+
+# --> Route for Get Info and Read
+@app.route("/api/reads/")
+def information():
+    url = request.args.get("url")
+    if url:
+        limit = request.args.get("limit")
+        only_chapter = request.args.get("only_chapter")
+        Main = ReadComic(url)
+        if limit and only_chapter:
+            return (
+                jsonify(
+                    FinalOutput().results(
+                        None, "params limit and chapter do not collab!", 400
+                    )
+                ),
+                400,
+            )
+        else:
+            if limit:
+                return Main.route(param="limit", limit=limit)
+            elif only_chapter:
+                return Main.route(param="chapter", only=only_chapter)
+            else:
+                return Main.route(param="info")
+
+    return jsonify(FinalOutput().results(None, "url is required!", 400)), 400
 
 
 if __name__ == "__main__":

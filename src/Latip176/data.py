@@ -71,7 +71,7 @@ class Response(object):
                 "author": "Latip176",
             }
         )
-        return json.dumps(self._Response__data_dict), 200
+        return self._Response__data_dict, 200
 
 
 # --> Class Turunan dari Class Response
