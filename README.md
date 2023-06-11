@@ -6,7 +6,7 @@ This project is Web Scraping to mangayaro.net with Python and Made for Rest Api
 
 - 07 June 2023: readme.md
 - 09 June 2023: fix bug, error, readme.md
-
+- 11 June 2023: add fitur reads for get information of comic and image on chapter
 # use
 
 ## route
@@ -23,19 +23,22 @@ search:
 category:
     ?category=populer
 ```
-#### reads
+### reads
+```in reads you can read a infromation that comic or chapter image```
 ```
 url:
     paste the url of comic mangayaro (required)
     ?url=https://www.mangayaro.net/manga/beyond-myriad-peoples/
     
     limit:
-        count limit for get image in chapter
+        get omage on chapter with limit
         &limit=10
         
     only_chapter:
-        only_chapter is for get image in only chapter
+        get image on chapter with only chaptrr
         &only_chaptrer=10
+    
+    limit & only_chapter can't collab!
 ```
 
 ## testing
