@@ -27,16 +27,16 @@ category:
 ```in reads you can read a infromation that comic or get image on chapter```
 ```
 url:
-    paste the url of comic mangayaro (required)
+    paste the url of comic mangayaro (required). example:
     ?url=https://www.mangayaro.net/manga/beyond-myriad-peoples/
     
     limit:
-        get omage on chapter with limit
-        &limit=10
+        get image on chapter with limit. example:
+        ?url=test&limit=10
         
     only_chapter:
-        get image on chapter with only chapter
-        &only_chaptrer=10
+        get image on chapter with only chapter. example:
+        ?url=test&only_chaptrer=10
     
     limit & only_chapter can't collab!
 ```
