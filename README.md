@@ -13,7 +13,7 @@ This project is Web Scraping to mangayaro.net with Python and Made for Rest Api
 ### search
 ```in search you can search comic with params:```
 #### search
-```JSON
+```
 search:
     ?keyword=one piece
 ```
