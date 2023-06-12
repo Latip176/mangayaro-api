@@ -62,7 +62,7 @@ class ReadComic(Main):
                             str(soup.find("div", {"id": "readerarea"})),
                         )
                         self._ReadComic__data_img.append(
-                            {f"chapter_{y['chapter']}": preaderarea}
+                            {f"{y['chapter']}": preaderarea}
                         )
                 else:
                     return FinalOutput().results(
