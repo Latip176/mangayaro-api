@@ -86,9 +86,6 @@ url:
     only_chapter:
         only_chapter is for get image in only chapter
         &only_chaptrer=10
->>>>>>> a7495e3 (Updated README.md)
-```
-
 ## testing example
 ### search category
 ```
