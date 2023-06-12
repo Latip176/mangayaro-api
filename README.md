@@ -89,13 +89,13 @@ https://mangayaro-api-production.up.railway.app/api/reads/?url=https://www.manga
 https://mangayaro-api-production.up.railway.app/api/reads/?url=https://www.mangayaro.net/manga/beyond-myriad-peoples&limit=5
 ```
 
-### reads image on chapter with only_chapter
+### reads image on chapter with only_chapter number
 
 ```
 https://mangayaro-api-production.up.railway.app/api/reads/?url=https://www.mangayaro.net/manga/beyond-myriad-peoples&only_chapter=3
 ```
 
-### read image panel with single chapter
+### read image on chapter with url single chapter
 
 ```
 https://mangayaro-api-production.up.railway.app/api/read/?url=https://www.mangayaro.net/my-sister-is-a-superstar-chapter-193-bahasa-indonesia/
