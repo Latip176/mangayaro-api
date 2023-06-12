@@ -29,10 +29,7 @@ def search():
             if kategori == "populer" or kategori == "proyek" or kategori == "terbaru":
                 return _main.route(kategori)
             else:
-                return (
-                    jsonify(FinalOutput().results(None, "category is not found!", 400)),
-                    400,
-                )
+                return FinalOutput().results(None, "category is not found!", 400)
     return FinalOutput().results(None, "query is required!", 400)
 
 
