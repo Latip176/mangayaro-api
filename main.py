@@ -33,7 +33,7 @@ def search():
                     jsonify(FinalOutput().results(None, "category is not found!", 400)),
                     400,
                 )
-    return jsonify(FinalOutput()).results(None, "query is required!", 400), 400
+    return FinalOutput().results(None, "query is required!", 400)
 
 
 # --> Route for Get Info and Read
