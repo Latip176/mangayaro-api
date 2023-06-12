@@ -45,12 +45,8 @@ def information():
         only_chapter = request.args.get("only_chapter")
         Main = ReadComic(url)
         if limit and only_chapter:
-            return (
-                jsonify(
-                    FinalOutput().results(
-                        None, "params limit and chapter do not collab!", 400
-                    )
-                ),
+            return FinalOutput().results(
+                None, "params limit and chapter do not collab!", 400
             )
         else:
             if limit:
@@ -60,7 +56,7 @@ def information():
             else:
                 return Main.route(param="info")
 
-    return jsonify(FinalOutput().results(None, "url is required!", 400))
+    return FinalOutput().results(None, "url is required!", 400)
 
 
 # --> Route for Get Image on Single Chapter with url
@@ -71,7 +67,7 @@ def read():
         Main = ReadComic(url)
         return Main.route(param="read", link=url)
     else:
-        return jsonify(FinalOutput().results(None, "url is required", 400))
+        return FinalOutput().results(None, "url is required", 400)
 
 
 if __name__ == "__main__":
