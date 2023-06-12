@@ -24,9 +24,19 @@ class ReadComic(Main):
         self.__data_img = []  # --> data: for all image panel on chapter comic
 
     def route(
-        self, limit=None, param=None, only=None
+        self, limit=None, param=None, only=None, link=None
     ) -> dict:  # --> function route url and condition
         self._ReadComic__data_chapter.clear()
+        self._ReadComic__data_img.clear()
+        if param == "read":
+            regex = re.findall(".*?chapter\-(\d+).*?", str(link))[0]
+            soup = self._Main__Response(link)
+            preaderarea = re.findall(
+                'src="(.*?)"',
+                str(soup.find("div", {"id": "readerarea"})),
+            )
+            self._ReadComic__data_img.append({f"Chapter {regex}": preaderarea})
+            return FinalOutput().results(self._ReadComic__data_img, "Success", 200)
         info = self.getInfo()  # --> get information
         __information = FinalOutput().results(info, "success", 200)
         if param == "info":

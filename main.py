@@ -51,7 +51,6 @@ def information():
                         None, "params limit and chapter do not collab!", 400
                     )
                 ),
-                400,
             )
         else:
             if limit:
@@ -61,8 +60,19 @@ def information():
             else:
                 return Main.route(param="info")
 
-    return jsonify(FinalOutput().results(None, "url is required!", 400)), 400
+    return jsonify(FinalOutput().results(None, "url is required!", 400))
+
+
+# --> Route for Get Image on Single Chapter with url
+@app.route("/api/read/")
+def read():
+    url = request.args.get("url")
+    if url:
+        Main = ReadComic(url)
+        return Main.route(param="read", link=url)
+    else:
+        return jsonify(FinalOutput().results(None, "url is required", 400))
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
