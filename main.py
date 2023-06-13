@@ -29,8 +29,8 @@ def search():
             if kategori == "populer" or kategori == "proyek" or kategori == "terbaru":
                 return _main.route(kategori)
             else:
-                return jsonify(FinalOutput().results(None, "category is not found!", 400), 400)
-    return jsonify(FinalOutput().results(None, "query is required!", 400), 400)
+                return jsonify(FinalOutput().results(None, "category is not found!", 400)), 400
+    return jsonify(FinalOutput().results(None, "query is required!", 400)), 400
 
 
 # --> Route for Get Info and Read
@@ -44,7 +44,7 @@ def information():
         if limit and only_chapter:
             return jsonify(FinalOutput().results(
                 None, "params limit and chapter do not collab!", 400
-            ), 400)
+            )), 400
         else:
             if limit:
                 return Main.route(param="limit", limit=limit)
@@ -53,7 +53,7 @@ def information():
             else:
                 return Main.route(param="info")
 
-    return jsonify(FinalOutput().results(None, "url is required!", 400), 400)
+    return jsonify(FinalOutput().results(None, "url is required!", 400)), 400
 
 
 # --> Route for Get Image on Single Chapter with url
@@ -64,7 +64,7 @@ def read():
         Main = ReadComic(url)
         return Main.route(param="read", link=url)
     else:
-        return jsonify(FinalOutput().results(None, "url is required", 400), 400)
+        return jsonify(FinalOutput().results(None, "url is required"), 400), 400
 
 
 if __name__ == "__main__":
