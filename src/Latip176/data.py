@@ -91,7 +91,7 @@ class WebScrapper(Response):
 
     def route(self, category: str = None, keyword: str = None) -> dict:
         self._WebScrapper__data_list.clear()
-        if category == "debug":
+        if keyword == "debug":
             return jsonify(
                 {
                     "debug_log": BeautifulSoup(
