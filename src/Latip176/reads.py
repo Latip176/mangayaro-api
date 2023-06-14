@@ -13,7 +13,7 @@ class Main(object):
                 self._Main__session.get(
                     self._Main__url,
                     headers={
-                        "user-agent": "Mozilla/5.0 (X11; CrOS x86_64 7077.134.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.156 Safari/537.36"
+                        "User-Agent": "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.188 Safari/537.36 CrKey/1.54.250320"
                     },
                 ).text,
                 "html.parser",
@@ -23,7 +23,7 @@ class Main(object):
                 self._Main__session.get(
                     query,
                     headers={
-                        "user-agent": "Mozilla/5.0 (X11; CrOS x86_64 7077.134.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.156 Safari/537.36"
+                        "User-Agent": "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.188 Safari/537.36 CrKey/1.54.250320"
                     },
                 ).text,
                 "html.parser",
