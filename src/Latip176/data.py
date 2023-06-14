@@ -1,24 +1,24 @@
 from src.Latip176.module import *
+from src.Latip176.output import FinalOutput
 
 
 # --> Class Response
 class Response(object):
-    def __init__(self, session=requests.Session(), dict={}):
+    def __init__(self, session=requests.Session()):
         self.__session = session  # --> self session: untuk menyimpan requests Session
-        self.__data_dict = dict  # --> self data dict: untuk menampung data dictinory
 
     # --> Request ke web
-    def __response(self, query=None) -> str:
-        if query == None:
+    def __response(self, category=None, keyword=None) -> str:
+        if category != None:
             return self._Response__session.get(
                 "https://www.mangayaro.net/",
                 headers={
                     "UserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
                 },
             )
-        else:
+        if keyword != None:
             return self._Response__session.get(
-                f"https://www.mangayaro.net/?s={query}",
+                f"https://www.mangayaro.net/?s={keyword}",
                 headers={
                     "UserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
                 },
@@ -27,51 +27,64 @@ class Response(object):
     # --> Final Output
     def __setup(self, data_list: list, query: str) -> dict:
         priv_list = []
-        if query == "populer":
-            for data in data_list:
-                url, bg_url, title, chapter, rating = data
-                priv_list.append(
-                    {
-                        "url": url,
-                        "bg_url": bg_url,
-                        "title": title,
-                        "chapter": chapter,
-                        "rating": rating,
-                    }
-                )
-        elif query == "terbaru" or query == "proyek":
-            for data in data_list:
-                url, bg_url, title, update = data
-                priv_list.append(
-                    {"url": url, "bg_url": bg_url, "title": title, "update": update}
-                )
+        if data_list != None:
+            if query == "populer":
+                for data in data_list:
+                    url, bg_url, title, chapter, rating = data
+                    priv_list.append(
+                        {
+                            "url": url,
+                            "bg_url": bg_url,
+                            "title": title,
+                            "chapter": chapter,
+                            "rating": rating,
+                        }
+                    )
+            elif query == "terbaru" or query == "proyek":
+                for data in data_list:
+                    url, bg_url, title, update = data
+                    priv_list.append(
+                        {"url": url, "bg_url": bg_url, "title": title, "update": update}
+                    )
+            else:
+                for data in data_list:
+                    url, bg_url, title, chapter, rating, tipe = data
+                    priv_list.append(
+                        {
+                            "url": url,
+                            "bg_url": bg_url,
+                            "title": title,
+                            "chapter": chapter,
+                            "rating": rating,
+                            "tipe_komik": tipe,
+                        }
+                    )
+            self._Response__data_dict.update(
+                {
+                    "results": [
+                        {
+                            "data": priv_list,
+                            "msg": "Success",
+                            "status_code": 200,
+                            "jumlah_data": len(priv_list),
+                        }
+                    ],
+                    "author": "Latip176",
+                }
+            )
+            return self._Response__data_dict, 200
         else:
-            for data in data_list:
-                url, bg_url, title, chapter, rating, tipe = data
-                priv_list.append(
-                    {
-                        "url": url,
-                        "bg_url": bg_url,
-                        "title": title,
-                        "chapter": chapter,
-                        "rating": rating,
-                        "tipe_komik": tipe,
-                    }
-                )
-        self._Response__data_dict.update(
-            {
+            return {
                 "results": [
                     {
-                        "data": priv_list,
-                        "msg": "Success",
+                        "data": None,
+                        "msg": "Data Not Found",
                         "status_code": 200,
-                        "jumlah_data": len(priv_list),
+                        "jumlah_data": 0,
                     }
                 ],
                 "author": "Latip176",
             }
-        )
-        return self._Response__data_dict, 200
 
 
 # --> Class Turunan dari Class Response
@@ -80,42 +93,36 @@ class WebScrapper(Response):
         super().__init__()
         self.__data_list = list  # --> self data list: untuk menampung data list
 
-    def route(self, query: str = None) -> dict:
-        self._Response__data_dict.clear()
+    def route(self, category: str = None, keyword: str = None) -> dict:
         self._WebScrapper__data_list.clear()
-        if query != None:
-            if query == "populer" or query == "terbaru" or query == "proyek":
+        if keyword != None or category != None:
+            if category == "populer" or category == "terbaru" or category == "proyek":
                 soup = BeautifulSoup(
-                    self._Response__response().text, "html.parser"
+                    self._Response__response(category=category).text, "html.parser"
                 )  # --> BeautifulSoup
-                if query == "populer":  # --> Jika Query memasukan "populer"
+                if category == "populer":  # --> Jika Query memasukan "populer"
                     populer = self.populer_hari_ini(
                         soup
                     )  # --> Menuju ke Function populer_hari_ini
-                    return self._Response__setup(populer, query)
-                elif query == "proyek":  # --> Jika Query memasukan "proyek"
+                    return FinalOutput().results(populer, "Success", 200)
+                elif category == "proyek":  # --> Jika Query memasukan "proyek"
                     proyek = self.pembaruan_projek(
                         soup
                     )  # --> Menuju ke Function pembaruan_projek
-                    return self._Response__setup(proyek, query)
-                elif query == "terbaru":
+                    return FinalOutput().results(proyek, "Success", 200)
+                elif category == "terbaru":
                     terbaru = self.pembaruan_terbaru(
                         soup
                     )  # --> Menuju ke Function pembaruan_terbaru
-                    return self._Response__setup(terbaru, query)
+                    return FinalOutput().results(terbaru, "Success", 200)
             else:
                 soup = BeautifulSoup(
-                    self._Response__response(query).text, "html.parser"
+                    self._Response__response(keyword=keyword).text, "html.parser"
                 )  # --> BeautifulSoup
                 search = self.searchComic(soup)
-                return self._Response__setup(search, query)
+                return FinalOutput().results(search, "Success", 200)
         else:
-            return {
-                "results": [
-                    {"data": None, "msg": "query is required!", "status_code": 400}
-                ],
-                "author": "Latip176",
-            }, 400
+            return FinalOutput().results(None, "query is required!", 400)
 
     def populer_hari_ini(
         self, soup
@@ -130,7 +137,7 @@ class WebScrapper(Response):
             bigor, limit = link.find("div", attrs={"class": "bigor"}), link.find(
                 "div", attrs={"class": "limit"}
             )
-            data_list = (url, bg_url, title, chapter, rating) = [
+            url, bg_url, title, chapter, rating = [
                 link.get("href"),
                 limit.find("img").get("src"),
                 " ".join(
@@ -145,7 +152,13 @@ class WebScrapper(Response):
                 bigor.find("div", attrs={"class": "numscore"}).string,
             ]  # --> Scraping mengambil data: url, judul, jumlah chapter, rating. komik
             self._WebScrapper__data_list.append(
-                data_list
+                {
+                    "url": url,
+                    "bg_url": bg_url,
+                    "title": title,
+                    "chapter": chapter,
+                    "rating": rating,
+                }
             )  # --> Menambahkan data hasil Scraping ke Self data list
         return self._WebScrapper__data_list  # --> mengembalikan nilai Self data list
 
@@ -163,7 +176,7 @@ class WebScrapper(Response):
                 "a", href=True
             ), i.find("div", attrs={"class": "luf"})
 
-            data_list = (url, bg_url, title, update) = [
+            url, bg_url, title, update = [
                 imgu.get("href"),
                 imgu.find("img").get("src"),
                 " ".join(
@@ -183,7 +196,7 @@ class WebScrapper(Response):
                 ],
             ]
             self._WebScrapper__data_list.append(
-                data_list
+                {"url": url, "bg_url": bg_url, "title": title, "update": update}
             )  # --> Menambahkan data hasil Scraping ke Self data list
         return self._WebScrapper__data_list  # --> mengembalikan nilai Self data list
 
@@ -201,7 +214,7 @@ class WebScrapper(Response):
                 "a", href=True
             ), i.find("div", attrs={"class": "luf"})
 
-            data_list = (url, bg_url, title, update) = [
+            url, bg_url, title, update = [
                 imgu.get("href"),
                 imgu.find("img").get("src"),
                 " ".join(
@@ -221,7 +234,7 @@ class WebScrapper(Response):
                 ],
             ]
             self._WebScrapper__data_list.append(
-                data_list
+                {"url": url, "bg_url": bg_url, "title": title, "update": update}
             )  # --> Menambahkan data hasil Scraping ke Self data list
         return self._WebScrapper__data_list  # --> mengembalikan nilai Self data list
 
@@ -233,8 +246,11 @@ class WebScrapper(Response):
             .find("div", attrs={"class": "listupd"})
             .findAll("div", attrs={"class": "bs"})
         )
-        pagination = soup.find("div", attrs={"class": "pagination"})
-        page = pagination.find("a", attrs={"class": "next page-numbers"})
+        try:
+            pagination = soup.find("div", attrs={"class": "pagination"})
+            page = pagination.find("a", attrs={"class": "next page-numbers"})
+        except:
+            pass
         for x in content:
             bigor, limit = x.find("div", attrs={"class": "bigor"}), x.find(
                 "div", attrs={"class": "limit"}
@@ -256,10 +272,17 @@ class WebScrapper(Response):
                 else "Tidak Berwarna",
             ]
             self._WebScrapper__data_list.append(
-                data_list
+                {
+                    "url": url,
+                    "bg_url": bg_url,
+                    "title": title,
+                    "chapter": chapter,
+                    "rating": rating,
+                    "tipe_komik": tipe,
+                }
             )  # --> Menambahkan data hasil Scraping ke Self data list
-        if page:
-            self.searchComic(
-                BeautifulSoup(requests.get(page.get("href")).text, "html.parser")
-            )  # --> Menambahkan data hasil Scraping ke Self data list
+        # if page:
+        #    self.searchComic(
+        #        BeautifulSoup(requests.get(page.get("href")).text, "html.parser")
+        #    )  # --> Menambahkan data hasil Scraping ke Self data list
         return self._WebScrapper__data_list  # --> mengembalikan nilai Self data list

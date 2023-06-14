@@ -43,9 +43,9 @@ class ReadComic(Main):
             return __information
         elif param == "chapter" or param == "limit":
             if param == "chapter":
-                information = __information[0]["results"][0]["data"]
-                if int(only) <= information[-1]["chapter_count"]:
-                    infos = information[0]["chapter_content"][int(only) - 1]
+                information = info[0]
+                if int(only) <= information["chapter_count"]:
+                    infos = information["chapter_content"][int(only) - 1]
                     soup = self._Main__Response(infos["url"])
                     preaderarea = re.findall(
                         'src="(.*?)"',
@@ -57,13 +57,13 @@ class ReadComic(Main):
                 else:
                     return FinalOutput().results(
                         None,
-                        f"the number of limits entered is too much! count: {information[-1]['chapter_count']} only",
+                        f"the number of limits entered is too much! count: {information['chapter_count']} Chapter only",
                         400,
                     )
             elif param == "limit":
-                information = __information[0]["results"][0]["data"]
-                if int(limit) <= information[-1]["chapter_count"]:
-                    for x, y in enumerate(information[0]["chapter_content"]):
+                information = info[0]
+                if int(limit) <= information["chapter_count"]:
+                    for x, y in enumerate(information["chapter_content"]):
                         if x == int(limit):
                             break
                         soup = self._Main__Response(y["url"])
@@ -77,7 +77,7 @@ class ReadComic(Main):
                 else:
                     return FinalOutput().results(
                         None,
-                        f"the number of limits entered is too much! count: {information[-1]['chapter_count']} only",
+                        f"the number of limits entered is too much! count: {information['chapter_count']} Chapter only",
                         400,
                     )
             return FinalOutput().results(self._ReadComic__data_img, "success", 200)
