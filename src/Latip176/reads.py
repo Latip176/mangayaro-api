@@ -43,7 +43,7 @@ class ReadComic(Main):
             return __information
         elif param == "chapter" or param == "limit":
             if param == "chapter":
-                information = __information["results"][0]["data"]
+                information = __information[0]["results"][0]["data"]
                 if int(only) <= information[-1]["chapter_count"]:
                     infos = information[0]["chapter_content"][int(only) - 1]
                     soup = self._Main__Response(infos["url"])
@@ -61,7 +61,7 @@ class ReadComic(Main):
                         400,
                     )
             elif param == "limit":
-                information = __information["results"][0]["data"]
+                information = __information[0]["results"][0]["data"]
                 if int(limit) <= information[-1]["chapter_count"]:
                     for x, y in enumerate(information[0]["chapter_content"]):
                         if x == int(limit):
