@@ -12,16 +12,12 @@ class Response(object):
         if category != None:
             return self._Response__session.get(
                 "https://www.mangayaro.net/",
-                headers={
-                    "UserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
-                },
+                headers={"UserAgent": "chrome"},
             )
         if keyword != None:
             return self._Response__session.get(
                 f"https://www.mangayaro.net/?s={keyword}",
-                headers={
-                    "UserAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
-                },
+                headers={"UserAgent": "chrome"},
             )
 
     # --> Final Output
@@ -95,6 +91,14 @@ class WebScrapper(Response):
 
     def route(self, category: str = None, keyword: str = None) -> dict:
         self._WebScrapper__data_list.clear()
+        if category == "debug":
+            return jsonify(
+                {
+                    "debug_log": BeautifulSoup(
+                        self._Response__response(category=category).text, "html.parser"
+                    )
+                }
+            )
         if keyword != None or category != None:
             if category == "populer" or category == "terbaru" or category == "proyek":
                 soup = BeautifulSoup(
