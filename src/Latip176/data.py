@@ -93,13 +93,17 @@ class WebScrapper(Response):
     def route(self, category: str = None, keyword: str = None) -> dict:
         self._WebScrapper__data_list.clear()
         if keyword == "debug":
-            return jsonify(
-                {
-                    "debug_log": BeautifulSoup(
-                        self._Response__response(category=category).text, "html.parser"
-                    )
-                }
-            )
+            try:
+                return jsonify(
+                    {
+                        "debug_log": self._Response__session.get(
+                            "https://www.mangayaro.net/",
+                            headers={"UserAgent": "chrome"},
+                        ).text
+                    }
+                )
+            except Exception as e:
+                return jsonify({"debug_error": str(e)})
         if keyword != None or category != None:
             if category == "populer" or category == "terbaru" or category == "proyek":
                 soup = BeautifulSoup(
