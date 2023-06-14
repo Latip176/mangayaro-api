@@ -1,5 +1,6 @@
 from src.Latip176.module import *
 from src.Latip176.output import FinalOutput
+from flask import jsonify
 
 
 # --> Class Response
