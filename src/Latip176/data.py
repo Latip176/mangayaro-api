@@ -13,12 +13,16 @@ class Response(object):
         if category != None:
             return self._Response__session.get(
                 "https://www.mangayaro.net/",
-                headers={"UserAgent": "chrome"},
+                headers={
+                    "UserAgent": "Mozilla/5.0 (X11; CrOS x86_64 7077.134.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.156 Safari/537.36"
+                },
             )
         if keyword != None:
             return self._Response__session.get(
                 f"https://www.mangayaro.net/?s={keyword}",
-                headers={"UserAgent": "chrome"},
+                headers={
+                    "UserAgent": "Mozilla/5.0 (X11; CrOS x86_64 7077.134.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.156 Safari/537.36"
+                },
             )
 
     # --> Final Output
@@ -98,7 +102,9 @@ class WebScrapper(Response):
                     {
                         "debug_log": self._Response__session.get(
                             "https://www.mangayaro.net/",
-                            headers={"UserAgent": "chrome"},
+                            headers={
+                                "UserAgent": "Mozilla/5.0 (X11; CrOS x86_64 7077.134.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.156 Safari/537.36"
+                            },
                         ).text
                     }
                 )

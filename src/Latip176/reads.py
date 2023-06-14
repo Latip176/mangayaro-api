@@ -10,10 +10,24 @@ class Main(object):
     def __Response(self, query=None) -> str:
         if query == "info":
             return BeautifulSoup(
-                self._Main__session.get(self._Main__url).text, "html.parser"
+                self._Main__session.get(
+                    self._Main__url,
+                    headers={
+                        "user-agent": "Mozilla/5.0 (X11; CrOS x86_64 7077.134.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.156 Safari/537.36"
+                    },
+                ).text,
+                "html.parser",
             )
         else:
-            return BeautifulSoup(self._Main__session.get(query).text, "html.parser")
+            return BeautifulSoup(
+                self._Main__session.get(
+                    query,
+                    headers={
+                        "user-agent": "Mozilla/5.0 (X11; CrOS x86_64 7077.134.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.156 Safari/537.36"
+                    },
+                ).text,
+                "html.parser",
+            )
 
 
 class ReadComic(Main):
