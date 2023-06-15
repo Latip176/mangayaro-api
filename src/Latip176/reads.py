@@ -108,6 +108,7 @@ class ReadComic(Main):
             .find("p")
             .string,
         )
+        bg_url = soup.find("img", attrs={"itemprop": "image"}).get("src")
         data = soup.findAll("div", attrs={"class": "inepcx"})[1].find("a").get("href")
         data_chapters = soup.findAll("li", attrs={"data-num": True})
         for x in data_chapters:
@@ -133,6 +134,7 @@ class ReadComic(Main):
         self._ReadComic__data_list.append(
             {
                 "title": title,
+                "bg_url": bg_url,
                 "genres": genres,
                 "sinopsis": sinopsis,
                 "chapter_content": self._ReadComic__data_chapter,
