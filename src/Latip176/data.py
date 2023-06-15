@@ -244,7 +244,7 @@ class WebScrapper(Response):
                             "chapter": x.find("a").string,
                             "time": x.find("span").string,
                         }
-                        for i, x in enumerate(luf.find("ul").findAll("li"))
+                        for i, x in enumerate(luf.findAll("li"))
                     }
                 ],
             ]
