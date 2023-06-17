@@ -49,7 +49,14 @@ class ReadComic(Main):
                 'src="(.*?)"',
                 str(soup.find("div", {"id": "readerarea"})),
             )
-            self._ReadComic__data_img.append({f"Chapter {regex}": preaderarea})
+            prevNext = re.findall('"prevUrl":"(.*?)","nextUrl":"(.*?)"', str(soup))[0]
+            self._ReadComic__data_img.append(
+                {
+                    f"Chapter {regex}": preaderarea,
+                    "prev": prevNext[0].replace("\\", ""),
+                    "next": prevNext[1].replace("\\", ""),
+                }
+            )
             return FinalOutput().results(self._ReadComic__data_img, "Success", 200)
         info = self.getInfo()  # --> get information
         __information = FinalOutput().results(info, "success", 200)
