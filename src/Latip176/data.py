@@ -1,6 +1,5 @@
 from src.Latip176.module import *
 from src.Latip176.output import FinalOutput
-from flask import jsonify
 
 
 # --> Class Response
@@ -25,68 +24,6 @@ class Response(object):
                 },
             )
 
-    # --> Final Output
-    def __setup(self, data_list: list, query: str) -> dict:
-        priv_list = []
-        if data_list != None:
-            if query == "populer":
-                for data in data_list:
-                    url, bg_url, title, chapter, rating = data
-                    priv_list.append(
-                        {
-                            "url": url,
-                            "bg_url": bg_url,
-                            "title": title,
-                            "chapter": chapter,
-                            "rating": rating,
-                        }
-                    )
-            elif query == "terbaru" or query == "proyek":
-                for data in data_list:
-                    url, bg_url, title, update = data
-                    priv_list.append(
-                        {"url": url, "bg_url": bg_url, "title": title, "update": update}
-                    )
-            else:
-                for data in data_list:
-                    url, bg_url, title, chapter, rating, tipe = data
-                    priv_list.append(
-                        {
-                            "url": url,
-                            "bg_url": bg_url,
-                            "title": title,
-                            "chapter": chapter,
-                            "rating": rating,
-                            "tipe_komik": tipe,
-                        }
-                    )
-            self._Response__data_dict.update(
-                {
-                    "results": [
-                        {
-                            "data": priv_list,
-                            "msg": "Success",
-                            "status_code": 200,
-                            "jumlah_data": len(priv_list),
-                        }
-                    ],
-                    "author": "Latip176",
-                }
-            )
-            return self._Response__data_dict, 200
-        else:
-            return {
-                "results": [
-                    {
-                        "data": None,
-                        "msg": "Data Not Found",
-                        "status_code": 200,
-                        "jumlah_data": 0,
-                    }
-                ],
-                "author": "Latip176",
-            }
-
 
 # --> Class Turunan dari Class Response
 class WebScrapper(Response):
@@ -96,20 +33,6 @@ class WebScrapper(Response):
 
     def route(self, category: str = None, keyword: str = None) -> dict:
         self._WebScrapper__data_list.clear()
-        if keyword == "debug":
-            try:
-                return jsonify(
-                    {
-                        "debug_log": self._Response__session.get(
-                            "https://www.mangayaro.net/",
-                            headers={
-                                "User-Agent": "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.188 Safari/537.36 CrKey/1.54.250320"
-                            },
-                        ).text
-                    }
-                )
-            except Exception as e:
-                return jsonify({"debug_error": str(e)})
         if keyword != None or category != None:
             if category == "populer" or category == "terbaru" or category == "proyek":
                 soup = BeautifulSoup(
@@ -217,7 +140,7 @@ class WebScrapper(Response):
 
     def pembaruan_terbaru(
         self, soup
-    ) -> list:  # --> Function untuk Scraping data komik Pembaruan Projek
+    ) -> list:  # --> Function untuk Scraping data komik Pembaruan Terbaru
         content = (
             soup.find("div", attrs={"id": "content"})
             .find("div", attrs={"class": "postbody"})
@@ -228,7 +151,7 @@ class WebScrapper(Response):
             imgu, luf = i.find("div", attrs={"class": "imgu"}).find(
                 "a", href=True
             ), i.find("div", attrs={"class": "luf"})
-
+            dataa = luf.findAll("li")
             url, bg_url, title, update = [
                 imgu.get("href"),
                 imgu.find("img").get("src"),
@@ -244,7 +167,7 @@ class WebScrapper(Response):
                             "chapter": x.find("a").string,
                             "time": x.find("span").string,
                         }
-                        for i, x in enumerate(luf.findAll("li"))
+                        for i, x in enumerate(dataa)
                     }
                 ],
             ]
@@ -261,11 +184,6 @@ class WebScrapper(Response):
             .find("div", attrs={"class": "listupd"})
             .findAll("div", attrs={"class": "bs"})
         )
-        try:
-            pagination = soup.find("div", attrs={"class": "pagination"})
-            page = pagination.find("a", attrs={"class": "next page-numbers"})
-        except:
-            pass
         for x in content:
             bigor, limit = x.find("div", attrs={"class": "bigor"}), x.find(
                 "div", attrs={"class": "limit"}
@@ -296,8 +214,4 @@ class WebScrapper(Response):
                     "tipe_komik": tipe,
                 }
             )  # --> Menambahkan data hasil Scraping ke Self data list
-        # if page:
-        #    self.searchComic(
-        #        BeautifulSoup(requests.get(page.get("href")).text, "html.parser")
-        #    )  # --> Menambahkan data hasil Scraping ke Self data list
         return self._WebScrapper__data_list  # --> mengembalikan nilai Self data list
