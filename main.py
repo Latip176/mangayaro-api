@@ -3,6 +3,7 @@ from src.Latip176.reads import ReadComic
 from src.Latip176.output import FinalOutput
 from flask import Flask, jsonify, request
 from flask_cors import CORS
+from proxy import proxy as proxies
 
 app = Flask(__name__)
 CORS(app)
@@ -13,6 +14,8 @@ CORS(app)
 def search():
     keyword = request.args.get("keyword")
     kategori = request.args.get("category")
+    proxy = proxies()
+    print(proxy)
     Main = WebScrapper()
     if keyword:
         return Main.route(keyword=keyword)
@@ -30,6 +33,9 @@ def search():
 def information():
     url = request.args.get("url")
     if url:
+        url = url.replace("https", "http")
+        proxy = proxies()
+        print(proxy)
         limit = request.args.get("limit")
         only_chapter = request.args.get("only_chapter")
         Main = ReadComic(url)
@@ -53,6 +59,9 @@ def information():
 def read():
     url = request.args.get("url")
     if url:
+        url = url.replace("https", "http")
+        proxy = proxies()
+        print(proxy)
         Main = ReadComic(url)
         return Main.route(param="read", link=url)
     else:

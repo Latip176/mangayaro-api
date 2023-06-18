@@ -11,32 +11,32 @@ class Response(object):
     def __response(self, category=None, keyword=None) -> str:
         if category != None:
             return self._Response__session.get(
-                "https://www.mangayaro.net/",
-                headers={
-                    "User-Agent": "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.188 Safari/537.36 CrKey/1.54.250320"
-                },
+                "http://www.mangayaro.net/",
+                headers={"User-Agent": "chrome"},
+                proxies=self._WebScrapper__proxies,
             )
         if keyword != None:
             return self._Response__session.get(
-                f"https://www.mangayaro.net/?s={keyword}",
-                headers={
-                    "User-Agent": "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.188 Safari/537.36 CrKey/1.54.250320"
-                },
+                f"http://www.mangayaro.net/?s={keyword}",
+                headers={"User-Agent": "chrome"},
+                proxies=self._WebScrapper__proxies,
             )
 
 
 # --> Class Turunan dari Class Response
 class WebScrapper(Response):
-    def __init__(self, list=[], dict={}):
+    def __init__(self, list=[], dict={}, proxy=None):
         super().__init__()
         self.__data_list = list  # --> self data list: untuk menampung data list
+        self.__proxies = proxy
 
     def route(self, category: str = None, keyword: str = None) -> dict:
         self._WebScrapper__data_list.clear()
         if keyword != None or category != None:
             if category == "populer" or category == "terbaru" or category == "proyek":
                 soup = BeautifulSoup(
-                    self._Response__response(category=category).text, "html.parser"
+                    self._Response__response(category=category).text,
+                    "html.parser",
                 )  # --> BeautifulSoup
                 if category == "populer":  # --> Jika Query memasukan "populer"
                     populer = self.populer_hari_ini(

@@ -18,4 +18,6 @@ def proxy():
         {k: v if d["Google"] == "yes" else "Nope" for k, v in d.items()} for d in data
     ]
 
-    return sorting
+    for x in sorting:
+        if x["IP Address"] != "Nope":
+            return {"http": "http://" + x["IP Address"] + ":" + x["Port"]}

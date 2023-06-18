@@ -15,6 +15,7 @@ class Main(object):
                     headers={
                         "User-Agent": "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.188 Safari/537.36 CrKey/1.54.250320"
                     },
+                    proxies=self._ReadComic__proxies,
                 ).text,
                 "html.parser",
             )
@@ -25,20 +26,26 @@ class Main(object):
                     headers={
                         "User-Agent": "Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.188 Safari/537.36 CrKey/1.54.250320"
                     },
+                    proxies=self._ReadComic__proxies,
                 ).text,
                 "html.parser",
             )
 
 
 class ReadComic(Main):
-    def __init__(self, url: str = None):
+    def __init__(self, url: str = None, proxy=None):
         super().__init__(requests.Session(), url)
         self.__data_list = []  # --> data: for list information comic
         self.__data_chapter = []  # --> data: for list data chapter founded
         self.__data_img = []  # --> data: for all image panel on chapter comic
+        self.__proxies = proxy
 
     def route(
-        self, limit=None, param=None, only=None, link=None
+        self,
+        limit=None,
+        param=None,
+        only=None,
+        link=None,
     ) -> dict:  # --> function route url and condition
         self._ReadComic__data_chapter.clear()
         self._ReadComic__data_img.clear()
