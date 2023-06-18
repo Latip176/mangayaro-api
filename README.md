@@ -8,8 +8,8 @@ This project is Web Scraping to mangayaro.net with Python and Made for Rest Api
 - 09 June 2023: fix bug, error, readme.md
 - 11 June 2023: add fitur reads: for get information of comic and get image on chapter
 - 12 June 2023: add fitur read: for get singple image panel with single chapter url
-- 14 June 2023: releases v1.0 (beta)
 - 17 June 2023: add fitur prev, next & delete route debug
+- 18 June 2023: add proxies system
 
 # use
 
