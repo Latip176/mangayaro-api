@@ -6,7 +6,9 @@ class FinalOutput:
         return (
             jsonify(
                 {
-                    "results": [{"data": data, "msg": msg, "status_code": status_code}],
+                    "results": [
+                        {"data": data, "msg": msg.lower(), "status_code": status_code}
+                    ],
                     "author": "Latip176",
                 }
             ),

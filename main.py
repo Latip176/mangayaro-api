@@ -13,13 +13,13 @@ CORS(app)
 def search():
     keyword = request.args.get("keyword")
     kategori = request.args.get("category")
-    _main = WebScrapper()
+    Main = WebScrapper()
     if keyword:
-        return _main.route(keyword=keyword)
+        return Main.route(keyword=keyword)
     else:
         if kategori:
             if kategori == "populer" or kategori == "proyek" or kategori == "terbaru":
-                return _main.route(category=kategori)
+                return Main.route(category=kategori)
             else:
                 return FinalOutput().results(None, "category is not found!", 400)
     return FinalOutput().results(None, "query is required!", 400)
