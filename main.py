@@ -16,7 +16,7 @@ def search():
     kategori = request.args.get("category")
     proxy = proxies()
     print(proxy)
-    Main = WebScrapper(proxy=proxy)
+    Main = WebScrapper()
     if keyword:
         return Main.route(keyword=keyword)
     else:
