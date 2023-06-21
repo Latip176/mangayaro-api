@@ -11,7 +11,7 @@ This project is Web Scraping to mangayaro.net with Python and Made for Rest Api
 - 17 June 2023: add fitur prev, next & delete route debug
 - 18 June 2023: add proxies system
 
-# useage
+# usage
 
 ## route
 
