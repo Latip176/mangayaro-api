@@ -4,7 +4,7 @@ from src.Latip176.output import FinalOutput
 
 # --> Class Response
 class Response(object):
-    def __init__(self, session=requests.Session()):
+    def __init__(self, session=cloudscraper.create_scraper()):
         self.__session = session  # --> self session: untuk menyimpan requests Session
 
     # --> Request ke web
