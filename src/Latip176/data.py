@@ -11,15 +11,11 @@ class Response(object):
     def __response(self, category=None, keyword=None) -> str:
         if category != None:
             return self._Response__session.get(
-                "http://www.mangayaro.net/",
-                headers={"User-Agent": "chrome"},
-                proxies=self._WebScrapper__proxies,
+                "http://www.mangayaro.net/"
             )
         if keyword != None:
             return self._Response__session.get(
-                f"http://www.mangayaro.net/?s={keyword}",
-                headers={"User-Agent": "chrome"},
-                proxies=self._WebScrapper__proxies,
+                f"http://www.mangayaro.net/?s={keyword}"
             )
 
 
