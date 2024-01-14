@@ -5,4 +5,4 @@ import json
 import cloudscraper
 import requests
 from bs4 import BeautifulSoup
-from zenrows import ZenRowsClient
+import cfscrape
