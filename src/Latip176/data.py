@@ -6,14 +6,19 @@ from src.Latip176.output import FinalOutput
 class Response(object):
     def __init__(self, session=cloudscraper.create_scraper()):
         self.__session = session  # --> self session: untuk menyimpan requests Session
+        self.req = ZenRowsClient("3117d241a578e0beb133220cc1455b003cb9284b")
 
     # --> Request ke web
     def __response(self, category=None, keyword=None) -> str:
         scrap = cloudscraper.create_scraper()
         if category != None:
-            return scrap.get("https://www.mangayaro.net/")
+            return self.req.get(
+                "https://www.mangayaro.net/", params={"js_render": "true"}
+            )
         if keyword != None:
-            return scrap.get(f"https://www.mangayaro.net/?s={keyword}")
+            return self.req.get(
+                f"https://www.mangayaro.net/?s={keyword}", params={"js_render": "true"}
+            )
 
 
 # --> Class Turunan dari Class Response
