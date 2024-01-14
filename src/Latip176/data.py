@@ -58,6 +58,7 @@ class WebScrapper(Response):
     def populer_hari_ini(
         self, soup
     ) -> list:  # --> Function untuk Scraping data komik Populer Hari Ini
+        print(soup)
         content = (
             soup.find("div", attrs={"id": "content"})
             .find("div", attrs={"class": "listupd"})
