@@ -10,15 +10,10 @@ class Response(object):
 
     # --> Request ke web
     def __response(self, category=None, keyword=None) -> str:
-        scrap = cloudscraper.create_scraper()
         if category != None:
-            return self.req.get(
-                "https://www.mangayaro.net/", params={"js_render": "true"}
-            )
+            return self.req.get("https://www.mangayaro.net/")
         if keyword != None:
-            return self.req.get(
-                f"https://www.mangayaro.net/?s={keyword}", params={"js_render": "true"}
-            )
+            return self.req.get(f"https://www.mangayaro.net/?s={keyword}")
 
 
 # --> Class Turunan dari Class Response
