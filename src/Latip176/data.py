@@ -13,9 +13,9 @@ class Response(object):
     def __response(self, category=None, keyword=None) -> str:
         # scraper = cfscrape.create_scraper()
         if category != None:
-            return requests.get("https://www.mangayaro.net/", headers={"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"})
+            return requests.Session().get("https://www.mangayaro.id/", headers={"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/89.0"})
         if keyword != None:
-            return requests.get(f"https://www.mangayaro.net/?s={keyword}", headers={"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"})
+            return requests.Session().get(f"https://www.mangayaro.id/?s={keyword}", headers={"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/89.0"})
 
 
 # --> Class Turunan dari Class Response
