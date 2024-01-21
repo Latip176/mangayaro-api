@@ -11,11 +11,11 @@ class Response(object):
 
     # --> Request ke web
     def __response(self, category=None, keyword=None) -> str:
-        scraper = cfscrape.create_scraper()
+        # scraper = cfscrape.create_scraper()
         if category != None:
-            return scraper.get("https://www.mangayaro.net/")
+            return requests.get("https://www.mangayaro.net/", headers={"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"})
         if keyword != None:
-            return scraper.get(f"https://www.mangayaro.net/?s={keyword}")
+            return requests.get(f"https://www.mangayaro.net/?s={keyword}", headers={"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"})
 
 
 # --> Class Turunan dari Class Response
